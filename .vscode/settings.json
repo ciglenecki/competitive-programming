@@ -2,6 +2,8 @@
 	"files.associations": {
 		"*.txt": "plaintext",
 		"vector": "cpp",
-		"unordered_map": "cpp"
+		"unordered_map": "cpp",
+		"iostream": "cpp",
+		"functional": "cpp"
 	}
 }
