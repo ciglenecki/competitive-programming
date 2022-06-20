@@ -1,5 +1,13 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        """Checks if a given string is expression with valid parantheses
+
+        Args:
+            s: string expression
+
+        Returns:
+            Boolean true or false
+        """
         stack = []
         parenthesis_dictionary = {
             "}": "{",
