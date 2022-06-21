@@ -5,40 +5,36 @@ digits = "23"
 
 class Solution:
     def letterCombinations(self, digits: str):
-        if digits == "":
-            return []
-        phone = [
-            ["None"],
-            ["None"],
-            ["a", "b", "c"],
-            ["d", "e", "f"],
-            ["g", "h", "i"],
-            ["j", "k", "l"],
-            ["m", "n", "o"],
-            ["p", "q", "r", "s"],
-            ["t", "u", "v"],
-            ["w", "x", "y", "z"],
-        ]
+        def solution_recursive_reduction(digits: str):
+            if digits == "":
+                return []
+            phone = {
+                "2": ["a", "b", "c"],
+                "3": ["d", "e", "f"],
+                "4": ["g", "h", "i"],
+                "5": ["j", "k", "l"],
+                "6": ["m", "n", "o"],
+                "7": ["p", "q", "r", "s"],
+                "8": ["t", "u", "v"],
+                "9": ["w", "x", "y", "z"],
+            }
 
-        list_of_buttons = [phone[int(d)] for d in digits]
+            def reduce(button_numbers: List[str], combinations: List[str] = []):
+                if len(button_numbers) == 0:
+                    return combinations
 
-        def reduce(list_of_buttons: List[List[str]], results: List[str] = []):
-            if len(list_of_buttons) == 0:
-                return results
+                button = phone[button_numbers.pop()]
 
-            button = list_of_buttons.pop(0)
+                if len(combinations) > 0:
+                    return reduce(
+                        button_numbers, [letter + combination for letter in button for combination in combinations]
+                    )
+                else:
+                    return reduce(button_numbers, button)
 
-            if len(results) > 0:
+            return reduce([d for d in digits])
 
-                return reduce(list_of_buttons, [result + letter for letter in button for result in results])
-            else:
-                return reduce(list_of_buttons, button)
-
-        res = reduce(list_of_buttons)
-        print(res)
-        return res
-
-        def solution_a(digits: str):
+        def solution_b(digits: str):
             if digits == "":
                 return []
             phone = [
@@ -76,28 +72,7 @@ class Solution:
                 result.append(combination_string)
             return result
 
+        solution_recursive_reduction(digits)
+
 
 Solution().letterCombinations(digits)
-#         "2345"
-
-#         lists = [phone[int(digit)] for digit in digits]
-
-#         def list_rec(lists, index, result = []):
-#             curr_list = lists.pop(0)
-#             if result == []:
-#                 result = curr_list
-
-#             new_res = []
-#             for res in result:
-#                 for letter in curr_list:
-#                     res.append()5
-#             for letter in result:
-#                 result.append()
-
-
-#         list_rec(a)
-#         for i in range(len(lists)):
-#             curr_list = lists[i]
-#             for
-
-#         print([letter for l in lists for letter in l])
