@@ -1,7 +1,5 @@
 from typing import List
 
-digits = "23"
-
 
 class Solution:
     def letterCombinations(self, digits: str):
@@ -73,6 +71,3 @@ class Solution:
             return result
 
         solution_recursive_reduction(digits)
-
-
-Solution().letterCombinations(digits)

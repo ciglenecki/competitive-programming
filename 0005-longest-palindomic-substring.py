@@ -1,3 +1,26 @@
+from check_test_cases import check_test_cases
+
+test_cases = {
+    "mamtabbath": "tabbat",
+    "bbb": "bbb",
+    "bb": "bb",
+    "a": "a",
+    "ac": "a",
+    "babad": "bab",
+    "abb": "bb",
+    "bba": "bb",
+    "aaaa": "aaaa",
+    "abba": "abba",
+    "abbb": "bbb",
+    "aaaaa": "aaaaa",
+    "cbbd": "bb",
+    "aacdefcaa": "aa",
+    "cccccccbbabbddddddd": "ccccccc",
+}
+
+function_name = "longestPalindrome"
+
+
 class Solution:
     def longestPalindrome(self, s: str):
         """
@@ -53,26 +76,4 @@ class Solution:
         return s[best_left + 1 : best_right]
 
 
-sols = {
-    "mamtabbath": "tabbat",
-    "bbb": "bbb",
-    "bb": "bb",
-    "a": "a",
-    "ac": "a",
-    "babad": "bab",
-    "abb": "bb",
-    "bba": "bb",
-    "aaaa": "aaaa",
-    "abba": "abba",
-    "abbb": "bbb",
-    "aaaaa": "aaaaa",
-    "cbbd": "bb",
-    "aacdefcaa": "aa",
-    "cccccccbbabbddddddd": "ccccccc",
-}
-sol = Solution()
-all_right = []
-for k, v in sols.items():
-    solu = sol.longestPalindrome(k)
-    all_right.append(solu == v)
-print(all_right)
+check_test_cases(getattr(Solution(), function_name), test_cases)
