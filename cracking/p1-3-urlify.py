@@ -27,18 +27,15 @@ def urlify_algo(string: str, str_len: int):
             offset_index -= 1
     return "".join(char_list)
 
-test_cases = (
-    (("Mr John Smith    ", 13), "Mr John Smith   ".rstrip().replace(" ", "%20")),
-    (("abc e d    ", 7), "abc e d    ".rstrip().replace(" ", "%20")),
-    ((" a b    ", 4), "%20a%20b"),
-    ((" a b       ", 5), "%20a%20b%20"),
 
-)
-
-test_functions = [
-    urlify_pythonic,
-    urlify_algo
+test_cases = [
+    {"i": "Mr John Smith    ", "o": 13},
+    {"i": "abc e d    ", "o": 7},
+    {"i": " a b    ", "o": 4},
+    {"i": " a b       ", "o": 5},
 ]
+
+test_functions = [urlify_pythonic, urlify_algo]
 
 if __name__ == "__main__":
     test_me(test_cases, test_functions)

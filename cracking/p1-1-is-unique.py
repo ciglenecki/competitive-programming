@@ -19,7 +19,7 @@ def is_unique_algorithmic(input_string: str):
 
     if len(input_string) > 128:
         return False
-    
+
     table = [False] * 128
     for letter in input_string:
         value = ord(letter)
@@ -30,18 +30,18 @@ def is_unique_algorithmic(input_string: str):
 
 
 test_cases = [
-    ["", True],
-    ["a", True],
-    ["ba", True],
-    ["aaa", False],
-    ["aab", False],
-    ["baa", False],
-    ["baaab", False],
-    ["abc", True],
-    ("23ds2", False),
-    ("hb 627jh=j ()", False),
-    ("".join([chr(val) for val in range(128)]), True),  # unique 128 chars
-    ("".join([chr(val // 2) for val in range(129)]), False),  # non-unique 129 chars
+    {"i": "", "o": True},
+    {"i": "a", "o": True},
+    {"i": "ba", "o": True},
+    {"i": "aaa", "o": False},
+    {"i": "aab", "o": False},
+    {"i": "baa", "o": False},
+    {"i": "baaab", "o": False},
+    {"i": "abc", "o": True},
+    {"i": "23ds2", "o": False},
+    {"i": "hb 627jh=j ()", "o": False},
+    {"i": "".join([chr(val) for val in range(128)]), "o": True},
+    {"i": "".join([chr(val // 2) for val in range(129)]), "o": False},
 ]
 
 test_functions = [is_unique_dict, is_unique_algorithmic]

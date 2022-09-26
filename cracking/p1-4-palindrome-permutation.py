@@ -8,103 +8,104 @@ from test import test_me
 
 
 def char_to_lower(char: str) -> str:
-	ordinal_number = ord(char)
+    ordinal_number = ord(char)
 
-	if ordinal_number >= ord('A') and ordinal_number <= ord('Z'):
-		return chr(ordinal_number + ord('a') - ord('A'))
-	elif ordinal_number >= ord('a') and ordinal_number <= ord('z'):
-		return char
-	else:
-		return char
+    if ordinal_number >= ord("A") and ordinal_number <= ord("Z"):
+        return chr(ordinal_number + ord("a") - ord("A"))
+    elif ordinal_number >= ord("a") and ordinal_number <= ord("z"):
+        return char
+    else:
+        return char
+
 
 def is_lower_alphabetic_char(char: str) -> str:
-	ordinal_number = ord(char)
-	return ordinal_number >= ord('a') and ordinal_number <= ord('z')
+    ordinal_number = ord(char)
+    return ordinal_number >= ord("a") and ordinal_number <= ord("z")
 
 
-def char_to_table_map(char: str) -> str: 
-	lower_char = char_to_lower(char)
+def char_to_table_map(char: str) -> str:
+    lower_char = char_to_lower(char)
 
-	if not is_lower_alphabetic_char(lower_char):
-		return -1 
+    if not is_lower_alphabetic_char(lower_char):
+        return -1
 
-	return ord(lower_char) - ord('a')
+    return ord(lower_char) - ord("a")
 
 
 def has_palindrome_permutation(string: str):
-	char_list = list(string)
-	store = {}
+    char_list = list(string)
+    store = {}
 
-	for character in char_list:
-		lower_character = character.lower()
-		if not is_lower_alphabetic_char(lower_character):
-			continue
-		if lower_character not in store:
-			store[lower_character] = 0
-		store[lower_character] += 1
-	
-	contains_odd = False
-	for value in store.values():
-		if value % 2 == 1:
-			if contains_odd:
-				return False
-			contains_odd = True
-	return True
+    for character in char_list:
+        lower_character = character.lower()
+        if not is_lower_alphabetic_char(lower_character):
+            continue
+        if lower_character not in store:
+            store[lower_character] = 0
+        store[lower_character] += 1
 
+    contains_odd = False
+    for value in store.values():
+        if value % 2 == 1:
+            if contains_odd:
+                return False
+            contains_odd = True
+    return True
 
 
 def has_palindrome_permutation_better(string: str):
-	char_list = list(string)
+    char_list = list(string)
 
-	table = [0 for _ in range(ord('z') - ord('a') + 1)]
-	odd_count = 0
+    table = [0 for _ in range(ord("z") - ord("a") + 1)]
+    odd_count = 0
 
-	for character in char_list:
-		char_table_idx = char_to_table_map(character)
+    for character in char_list:
+        char_table_idx = char_to_table_map(character)
 
-		if char_table_idx == -1:
-			continue
+        if char_table_idx == -1:
+            continue
 
-		table[char_table_idx] += 1
+        table[char_table_idx] += 1
 
-		if table[char_table_idx] % 2 == 1:
-			odd_count += 1
-		else:
-			odd_count -= 1
-	return odd_count <= 1
+        if table[char_table_idx] % 2 == 1:
+            odd_count += 1
+        else:
+            odd_count -= 1
+    return odd_count <= 1
 
 
 def has_palindrome_permutation_bit(string: str):
-	bit_map = 0 # each bit represents lower-case letter from the English alphabet
-	for c in string:
-		i = char_to_table_map(c)
-		if i != -1:
-			mask = 1 << i # set the i-th position
-			bit_map = bit_map ^ mask # flip the bit
-	return (bit_map & (bit_map - 1)) == 0
+    bit_map = 0  # each bit represents lower-case letter from the English alphabet
+    for c in string:
+        i = char_to_table_map(c)
+        if i != -1:
+            mask = 1 << i  # set the i-th position
+            bit_map = bit_map ^ mask  # flip the bit
+    return (bit_map & (bit_map - 1)) == 0
 
-test_cases = (
-    ("Tact Coa", True),
-	("aba", True),
-	("aab", True),
-	("abba", True),
-	("aabb", True),
-	("a-bba", True),
-	("a-bba!", True),
-	("Tact Coa", True),
-	("jhsabckuj ahjsbckj", True),
-	("Able was I ere I saw Elba", True),
-	("So patient a nurse to nurse a patient so", False),
-	("Random Words", False),
-	("Not a Palindrome", False),
-	("no x in nixon", True),
-	("azAZ", True),
-)
+
+test_cases = [
+    {"i": "Tact Coa", "o": True},
+    {"i": "aba", "o": True},
+    {"i": "aab", "o": True},
+    {"i": "abba", "o": True},
+    {"i": "aabb", "o": True},
+    {"i": "a-bba", "o": True},
+    {"i": "a-bba!", "o": True},
+    {"i": "Tact Coa", "o": True},
+    {"i": "jhsabckuj ahjsbckj", "o": True},
+    {"i": "Able was I ere I saw Elba", "o": True},
+    {"i": "So patient a nurse to nurse a patient so", "o": False},
+    {"i": "Random Words", "o": False},
+    {"i": "Not a Palindrome", "o": False},
+    {"i": "no x in nixon", "o": True},
+    {"i": "azAZ", "o": True},
+]
 
 test_functions = [
     has_palindrome_permutation,
-	has_palindrome_permutation_better,
-	has_palindrome_permutation_bit,
+    has_palindrome_permutation_better,
+    has_palindrome_permutation_bit,
 ]
 
 if __name__ == "__main__":

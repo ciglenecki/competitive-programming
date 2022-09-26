@@ -3,6 +3,7 @@ import time
 from typing import TypedDict, Any
 from collections.abc import Iterable
 
+
 class FailedCase(TypedDict):
     test_input: Any
     test_expected: Any
@@ -14,13 +15,16 @@ class Result(TypedDict):
     failed_cases: list[FailedCase]
 
 
+class Case(TypedDict):
+    i: object
+    o: object
+
+
 def test_me(
-    test_cases: list[tuple],
+    test_cases: list[Case],
     test_functions: list[Callable],
     num_runs: int = 1,
 ):
-    if type(test_cases) is dict:
-        test_cases = [[k, v] for k, v in test_cases.items()]  # type: ignore
     """
     results = {
         "my_function": {
@@ -37,7 +41,8 @@ def test_me(
     """
     results: dict[str, Result] = {}
 
-    for test_input, test_expected in test_cases:
+    for test_case in test_cases:
+        test_input, test_expected = test_case["i"], test_case["o"]
         for test_function in test_functions:
             function_name = test_function.__name__
             if function_name not in results:
@@ -52,17 +57,21 @@ def test_me(
                 num_runs
             ):  # run each case multiple times but record only single incorrect test
 
-                if isinstance(test_input, tuple) or isinstance(test_input, list):
-                    my_output = test_function(*test_input)
-                else:
-                    my_output = test_function(test_input)
-                if my_output != test_expected:
-                    incorrect_test = {
-                        "test_input": test_input,
-                        "test_expected": test_expected,
-                        "my_output": my_output,
-                    }
-
+                my_output = test_function(test_input)
+                try:
+                    if my_output != test_expected:
+                        incorrect_test = {
+                            "test_input": test_input,
+                            "test_expected": test_expected,
+                            "my_output": my_output,
+                        }
+                except Exception:
+                    if sorted(my_output) == sorted(test_expected):
+                        incorrect_test = {
+                            "test_input": test_input,
+                            "test_expected": test_expected,
+                            "my_output": my_output,
+                        }
             runtime = (time.perf_counter() - start) * 1000 / num_runs  # type: ignore
             results[function_name]["runtime"] += runtime
 
