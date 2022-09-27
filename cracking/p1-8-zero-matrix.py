@@ -73,6 +73,7 @@ def zero_matrix_small_storage(matrix: list[list[int]]) -> list[list[int]]:
     1 1 1
     
     """
+    
     if len(matrix) == 0:
         return -1
     
