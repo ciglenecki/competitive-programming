@@ -1,13 +1,24 @@
-from typing import List, Set
-from check_test_cases import check_test_cases
+from test import Case, test_me
 
-test_cases = [
-    [[1, 2, 2, 1, 1, 3], True],
-    [[1, 2], False],
+"""
+TEXT
+"""
+
+def solution():
+	pass
+
+
+
+test_cases: list[Case] = [
+    {
+        "i": True,
+        "o": True,
+    },
 ]
 
-function_name = "functionname"
+test_functions = [
+    solution
+]
 
-# =============== INSERT SOLUTION HERE
-
-check_test_cases(getattr(Solution(), function_name), test_cases)
+if __name__ == "__main__":
+    test_me(test_cases, test_functions)
