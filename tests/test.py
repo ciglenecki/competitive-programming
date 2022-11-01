@@ -57,9 +57,9 @@ def test_me(
             for _ in range(
                 num_runs
             ):  # run each case multiple times but record only single incorrect test
-                if type(test_input) is tuple:
-                    my_output = test_function(*test_input)
 
+                if type(test_input) is tuple:
+                    my_output = test_function(*deepcopy(test_input))
                 else:
                     my_output = test_function(deepcopy(test_input))
                 try:
