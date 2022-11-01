@@ -52,6 +52,12 @@ class Node:
     def __str__(self) -> str:
         return str(self.data)
 
+    def __eq__(self, other) -> bool:
+        return other.data == self.data
+
+    def __ne__(self, other) -> bool:
+        return not self.__eq__(other)
+
 
 class DoubleLinkedList:
     def __init__(self, head: Node | None = None):
@@ -60,7 +66,7 @@ class DoubleLinkedList:
 
     def create_from_list(self, elements: list):
         if len(elements) == 0:
-            return None
+            return self
         self.head = Node(elements[0])
         tmp_node = self.head
 
@@ -80,18 +86,18 @@ class DoubleLinkedList:
         while tmp_node.next_node is not None:
             tmp_node = tmp_node.next_node
         tmp_node.insert_after(data)
-        self.count +=1
+        self.count += 1
         return self
 
     def insert_at_start(self, data) -> DoubleLinkedList:
         if self.head is None:
             self.head = Node(data)
-            self.count +=1
+            self.count += 1
             return self
 
         self.head.insert_before(data)
         self.head = self.head.prev_node
-        self.count +=1
+        self.count += 1
 
         return self
 
@@ -125,7 +131,7 @@ class DoubleLinkedList:
     def runner_technique(self) -> DoubleLinkedList:
         if self.count % 2 != 0:
             raise Exception("Works only with even count")
-        
+
         slow = self.head
         fast = self.head.next_node
 
@@ -161,10 +167,27 @@ class DoubleLinkedList:
             string += str(tmp_node.data)
         return string
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __eq__(self, other):
+
+        head1 = self.head
+        head2 = other.head
+
+        while head1 is not None and head2 is not None:
+            if head1 != head2:
+                return False
+
+            head1 = head1.next_node
+            head2 = head2.next_node
+        return True
+
+
 if __name__ == "__main__":
     a = Node(4)
     b = Node(a)
-    l = DoubleLinkedList().create_from_list([1,2,3,4,7,8])
+    l = DoubleLinkedList().create_from_list([1, 2, 3, 4, 7, 8])
     l.insert_at_start(1).insert_at_start(5).insert_at_end(6).insert_at_end(7)
     print(l.count)
     print(l)
