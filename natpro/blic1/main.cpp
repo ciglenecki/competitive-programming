@@ -116,14 +116,15 @@ int main() {
 
             // LEFT SIDE CHANGES
 
-            if (possible[i - 1] == 1 && possible[i] == 0) {  // the previous day was holiday and today is work-day
+            if (holidays[i - 1] == 1 && holidays[i] == 0) {  // the previous day was holiday and today is work-day
                 max_holiday--;
             }
-            if (possible[i - 1] == 1 && possible[i] == 1) {  // previous day and today is holiday. that means that we have just one day less because we are still spending the same amount of time
+            if (holidays[i - 1] == 1 && holidays[i] == 1) {  // previous day and today is holiday. that means that we have just one day less because we are still spending the same amount of time
                 max_holiday--;
             }
 
-            if (possible[i - 1] == 0 && possible[i] == 1) {
+            if (holidays[i - 1] == 0 && holidays[i] == 1) {
+                dbg("jesi li prosao decko");
                 tmp_s++;
                 max_holiday--;
             }
