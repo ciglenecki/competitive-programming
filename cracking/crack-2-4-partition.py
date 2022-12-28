@@ -1,5 +1,5 @@
-from test import Case, test_me
-from structs import linked_list
+from tests.test import Case, test_me
+import structs.linked_list as linked_list
 
 """
 note: this question is weirdly phrased. My implementation finds the Node with value `value` and delets it from the linked list.
