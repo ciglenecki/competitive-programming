@@ -1,7 +1,13 @@
 /*
 
 https://codeforces.com/group/zlRFu4TNaV/contest/405529/problem/C
-Idea:
+
+Idea: caculate teacher - student array
+Values that are strictly positive (> 0) are in favor of the teacher. Itterate through values (e.g. -2) and find the value which will still be in teacher's favour when summed (-2 + 3 = 1)
+
+We define the number we are looking for as (0 - negative_number + 1)
+
+For strictly positive numbers we just count all the numbers that are located on the right side of that number (because they will surely produce a positive result).
 
 */
 
@@ -48,12 +54,13 @@ int main() {
     cin.tie(0);
     cout.tie(0);
 
-    int n, tmp, elem_idx, sum = 0, finding;
+    int n, elem_idx;
+    ll tmp, sum = 0;
     cin >> n;
+
     std::vector<int> arr, arr_ind;
     std::vector<int>::iterator element, zero_up;
 
-    dbg("Test", n);
     for (int i = 0; i < n; i++) {
         cin >> tmp;
         dbg(tmp);
@@ -67,28 +74,19 @@ int main() {
     }
 
     sort(arr.begin(), arr.end());
-    zero_up = upper_bound(arr.begin(), arr.end(), 0);
     dbg(arr);
-    for (int i = 0; i < n; i++) {
-        // if (arr[i] >= 0) {
-        //     sum += arr.size() - i;
-        //     break;
-        // }
 
-        if (arr[i] < 0) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= 0) {
             element = lower_bound(arr.begin() + i - 1, arr.end(), 0 - arr[i] + 1);
-        } else if (arr[i] == 0) {
-            element = zero_up;
         } else {
-            // can be the same number
+            // just find all those to the right
             element = arr.begin() + i + 1;
         }
 
         elem_idx = element - arr.begin();
         tmp = arr.size() - elem_idx;
-        dbg("element", arr[i], "i:", i, "idx", elem_idx);
-        dbg("tmp", tmp);
-        dbg("");
+
         sum += tmp;
     }
     cout << sum;

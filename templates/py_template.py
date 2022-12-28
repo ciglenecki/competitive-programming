@@ -1,12 +1,12 @@
-from test import Case, test_me
+from tests.test import Case, test_me
 
 """
 TEXT
 """
 
-def solution():
-	pass
 
+def solution():
+    pass
 
 
 test_cases: list[Case] = [
@@ -16,9 +16,7 @@ test_cases: list[Case] = [
     },
 ]
 
-test_functions = [
-    solution
-]
+test_functions = [solution]
 
 if __name__ == "__main__":
     test_me(test_cases, test_functions)

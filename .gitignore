@@ -5,4 +5,7 @@
 !*.txt
 !.gitignore
 !.vscode/*
-a
+
+build
+venv
+*.egg-info*
