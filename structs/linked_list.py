@@ -1,15 +1,19 @@
 from __future__ import annotations
 
+from typing import Generic, TypeVar
 
-class Node:
+T = TypeVar("T")
+
+
+class Node(Generic[T]):
     def __init__(
-        self, data, next_node: Node | None = None, prev_node: Node | None = None
+        self, data: T, next_node: Node | None = None, prev_node: Node | None = None
     ) -> None:
         self.next_node = next_node
         self.prev_node = prev_node
         self.data = data
 
-    def insert_after(self, data):
+    def insert_after(self, data: T):
         """
         [x]<=>[5]
         [x]<=>[new]<=>[5]
@@ -19,7 +23,7 @@ class Node:
             self.next_node.prev_node = new_node
         self.next_node = new_node
 
-    def insert_before(self, data):
+    def insert_before(self, data: T):
         """
         [5]<=>[x]
         [5]<=>[new]<=>[x]
@@ -52,19 +56,21 @@ class Node:
     def __str__(self) -> str:
         return str(self.data)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Node) -> bool:
         return other.data == self.data
 
-    def __ne__(self, other) -> bool:
+    def __ne__(self, other: Node) -> bool:
         return not self.__eq__(other)
 
 
-class DoubleLinkedList:
-    def __init__(self, head: Node | None = None):
+class DoubleLinkedList(Generic[T]):
+    def __init__(self, head: Node[T] | None = None):
         self.head = head
         self.count = 0
+        if head is not None:
+            self.count += 1
 
-    def create_from_list(self, elements: list):
+    def create_from_list(self, elements: list[T]):
         if len(elements) == 0:
             return self
         self.head = Node(elements[0])
@@ -77,7 +83,8 @@ class DoubleLinkedList:
         self.count = len(elements)
         return self
 
-    def insert_at_end(self, data) -> DoubleLinkedList:
+    def insert_at_end(self, data: T) -> DoubleLinkedList:
+        self.count += 1
         if self.head is None:
             self.head = Node(data)
             return self
@@ -86,22 +93,20 @@ class DoubleLinkedList:
         while tmp_node.next_node is not None:
             tmp_node = tmp_node.next_node
         tmp_node.insert_after(data)
-        self.count += 1
         return self
 
-    def insert_at_start(self, data) -> DoubleLinkedList:
+    def insert_at_start(self, data: T) -> DoubleLinkedList:
+        self.count += 1
         if self.head is None:
             self.head = Node(data)
-            self.count += 1
             return self
 
         self.head.insert_before(data)
         self.head = self.head.prev_node
-        self.count += 1
 
         return self
 
-    def find(self, data) -> Node | None:
+    def find(self, data: T) -> Node[T] | None:
         if self.head is None:
             return None
 
@@ -114,7 +119,7 @@ class DoubleLinkedList:
 
         return None
 
-    def remove(self, data) -> DoubleLinkedList:
+    def remove(self, data: T) -> DoubleLinkedList[T]:
         if self.head is None:
             return self
 
@@ -128,7 +133,7 @@ class DoubleLinkedList:
 
         return self
 
-    def runner_technique(self) -> DoubleLinkedList:
+    def runner_technique(self) -> DoubleLinkedList[T]:
         if self.count % 2 != 0:
             raise Exception("Works only with even count")
 
@@ -147,8 +152,17 @@ class DoubleLinkedList:
             slow = slow.next_node
             fast = fast.next_node.next_node
 
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next_node
+
     def __len__(self):
         return self.count
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
     def __str__(self) -> str:
         if not self.head:
@@ -170,8 +184,7 @@ class DoubleLinkedList:
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def __eq__(self, other):
-
+    def __eq__(self, other: DoubleLinkedList):
         head1 = self.head
         head2 = other.head
 
@@ -192,4 +205,5 @@ if __name__ == "__main__":
     print(l.count)
     print(l)
     l.runner_technique()
+    print(l)
     print(l)
