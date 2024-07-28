@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from enum import Enum
 from typing import Optional
 
@@ -69,6 +70,34 @@ def solution(tree: BinaryNode):
     return is_balanced(tree)
 
 
+def solution2(tree: BinaryNode):
+    """
+    LinkedList:
+        (Node (BinaryNode)) ->
+        (Node (BinaryNode)) ->
+        ...
+    """
+    MIN_SIZE = -sys.maxsize
+
+    def check_height(node: Optional[BinaryNode]):
+        if node is None:
+            return -1
+
+        left_depth = check_height(node.left)
+        if left_depth is MIN_SIZE:
+            return MIN_SIZE
+        right_depth = check_height(node.right)
+        if right_depth is MIN_SIZE:
+            return MIN_SIZE
+
+        diff = left_depth - right_depth
+        if diff > 1 or diff < -1:
+            return MIN_SIZE
+        return max(left_depth, right_depth) + 1
+
+    return check_height(tree) != MIN_SIZE
+
+
 test_cases: list[Case] = [
     {
         "i": BinaryNode(
@@ -119,7 +148,7 @@ test_cases: list[Case] = [
     },
 ]
 
-test_functions = [solution]
+test_functions = [solution, solution2]
 
 if __name__ == "__main__":
     test_me(test_cases, test_functions)
