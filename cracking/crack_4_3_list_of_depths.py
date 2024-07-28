@@ -55,11 +55,10 @@ def solution(tree: BinaryNode) -> list[linked_list.DoubleLinkedList]:
 
         for node_ll in parents:
             node: BinaryNode = node_ll.data
-            right, left = node.right, node.left
-            if left is not None:
-                new_ll.insert_at_end(left)
-            if right is not None:
-                new_ll.insert_at_end(right)
+            if node.left is not None:
+                new_ll.insert_at_end(node.left)
+            if node.right is not None:
+                new_ll.insert_at_end(node.right)
         parents = new_ll
 
     ints_only = []
