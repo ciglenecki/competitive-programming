@@ -1,8 +1,7 @@
-from typing import Callable
 import time
-from typing import TypedDict, Any
 from collections.abc import Iterable
 from copy import deepcopy
+from typing import Any, Callable, TypedDict
 
 
 class FailedCase(TypedDict):
@@ -57,7 +56,6 @@ def test_me(
             for _ in range(
                 num_runs
             ):  # run each case multiple times but record only single incorrect test
-
                 if type(test_input) is tuple:
                     my_output = test_function(*deepcopy(test_input))
                 else:
